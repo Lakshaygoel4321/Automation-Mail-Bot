@@ -1,5 +1,5 @@
 
-# 🤖 Automation AI Mail-Bot(AI-powered professional email generation system)
+# 🤖 Automation AI Mail-Bot
 <div align="center">
 
 ![AI Email Generator](https://img.shields.io/badge/AI-Email%20Generator-00D9FF?style=for-the-badge)
