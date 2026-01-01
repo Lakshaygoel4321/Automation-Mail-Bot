@@ -13,22 +13,6 @@
 
 ---
 
-<p align="center">
-  <a href="#-features">Features</a> •
-  <a href="#-demo">Demo</a> •
-  <a href="#-installation">Installation</a> •
-  <a href="#-usage">Usage</a> •
-  <a href="#-api-documentation">API</a> •
-  <a href="#-tech-stack">Tech Stack</a>
-</p>
-
-</div>
-
----
-
-
----
-
 ## 📖 Overview
 
 AI Email Generator is a full-stack application that leverages artificial intelligence to help users create professional emails effortlessly. Built with Flask backend and Next.js frontend, it provides an intuitive 4-step workflow for generating, refining, finalizing, and sending emails.
