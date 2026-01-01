@@ -1,6 +1,5 @@
 # 🎯 **Complete GitHub README.md for Your Project**
 
-```markdown
 # 🤖 AI Email Generator
 
 <div align="center">
@@ -598,4 +597,4 @@ If you found this project helpful, please give it a ⭐ on GitHub!
 [⬆ Back to Top](#-ai-email-generator)
 
 </div>
-```
+
