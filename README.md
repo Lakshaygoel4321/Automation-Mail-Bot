@@ -1,6 +1,6 @@
 
 # 🤖 Automation AI Mail-Bot
-
+**AI-powered professional email generation system with interactive refinement and direct sending capabilities**
 <div align="center">
 
 ![AI Email Generator](https://img.shields.io/badge/AI-Email%20Generator-00D9FF?style=for-the-badge)
@@ -10,7 +10,6 @@
 ![React](https://img.shields.io/badge/React-18.3.1-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
-**AI-powered professional email generation system with interactive refinement and direct sending capabilities**
 
 </div>
 
