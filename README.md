@@ -1,6 +1,4 @@
-# 🎯 **Complete GitHub README.md for Your Project**
-
-# 🤖 AI Email Generator
+# 🤖 Automation AI Mail-Bot
 
 <div align="center">
 
@@ -573,28 +571,6 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 - **Framer Motion** - For smooth animations
 
 ---
-
-## 📬 Contact & Support
-
-If you have any questions or need help:
-
-1. Open an [Issue](https://github.com/Lakshaygoel4321/Automation-Mail-Bot/issues)
-2. Start a [Discussion](https://github.com/Lakshaygoel4321/Automation-Mail-Bot/discussions)
-3. Email: [your-email@example.com](mailto:your-email@example.com)
-
----
-
 ## ⭐ Show Your Support
 
 If you found this project helpful, please give it a ⭐ on GitHub!
-
----
-
-<div align="center">
-
-**Made with ❤️ by Lakshay Goel**
-
-[⬆ Back to Top](#-ai-email-generator)
-
-</div>
-
