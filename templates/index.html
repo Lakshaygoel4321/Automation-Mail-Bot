@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Email Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        textarea, input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus, input[type="email"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-success {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #45a049;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .email-content {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            border: 2px solid #e0e0e0;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .step {
+            margin-bottom: 30px;
+        }
+
+        .step-title {
+            font-size: 1.3rem;
+            color: #667eea;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+
+        .feedback-history {
+            background: #fff3cd;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-size: 14px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .feedback-history strong {
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✉️ AI Email Generator</h1>
+        <p class="subtitle">Create professional emails with AI assistance</p>
+
+        <!-- Loading Indicator -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Processing...</p>
+        </div>
+
+        <!-- Messages -->
+        <div class="message" id="message"></div>
+
+        <!-- Step 1: Generate Email -->
+        <div class="step" id="step1">
+            <div class="step-title">
+                <span class="step-number">1</span>
+                Generate Email
+            </div>
+            <div class="input-group">
+                <label for="topic">Email Topic/Purpose</label>
+                <textarea 
+                    id="topic" 
+                    placeholder="Examples:
+• Meeting request for project review
+• Follow-up on previous discussion
+• Thank you for the opportunity
+• Request assistance with task
+• Proposal for new initiative"
+                    rows="5"
+                ></textarea>
+            </div>
+            <button class="btn btn-primary" onclick="generateEmail()">
+                🚀 Generate Email
+            </button>
+        </div>
+
+        <!-- Step 2: Review & Refine -->
+        <div class="step hidden" id="step2">
+            <div class="step-title">
+                <span class="step-number">2</span>
+                Review & Refine
+            </div>
+            
+            <div id="feedbackHistoryContainer" class="hidden">
+                <div class="feedback-history">
+                    <strong>📝 Applied Feedback:</strong>
+                    <div id="feedbackHistory"></div>
+                </div>
+            </div>
+            
+            <div class="email-content" id="emailContent"></div>
+            
+            <div class="input-group">
+                <label for="feedback">Provide Feedback (Optional)</label>
+                <textarea 
+                    id="feedback" 
+                    placeholder="Examples:
+• Make it more formal/casual
+• Make it shorter/more detailed
+• Add urgency
+• More professional tone
+• Include specific details"
+                    rows="3"
+                ></textarea>
+            </div>
+            
+            <div class="actions">
+                <button class="btn btn-secondary" onclick="regenerateEmail()">
+                    🔄 Regenerate with Feedback
+                </button>
+                <button class="btn btn-success" onclick="finalizeEmail()">
+                    ✓ Looks Good - Finalize
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 3: Send Email -->
+        <div class="step hidden" id="step3">
+            <div class="step-title">
+                <span class="step-number">3</span>
+                Send Email
+            </div>
+            
+            <div class="email-content" id="finalEmailContent"></div>
+            
+            <div class="input-group">
+                <label for="recipientEmail">Recipient Email Address</label>
+                <input 
+                    type="email" 
+                    id="recipientEmail" 
+                    placeholder="recipient@example.com"
+                />
+            </div>
+            
+            <div class="actions">
+                <button class="btn btn-primary" onclick="sendEmail()">
+                    📧 Send Email
+                </button>
+                <button class="btn btn-secondary" onclick="startOver()">
+                    ↻ Start Over
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let sessionId = null;
+
+        function showMessage(text, type = 'success') {
+            const messageEl = document.getElementById('message');
+            messageEl.textContent = text;
+            messageEl.className = `message ${type}`;
+            messageEl.style.display = 'block';
+            
+            setTimeout(() => {
+                messageEl.style.display = 'none';
+            }, 5000);
+        }
+
+        function showLoading(show = true) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+        }
+
+        async function generateEmail() {
+            const topic = document.getElementById('topic').value.trim();
+            
+            if (!topic) {
+                showMessage('Please enter an email topic', 'error');
+                return;
+            }
+
+            showLoading(true);
+
+            try {
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ topic })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    sessionId = data.session_id;
+                    document.getElementById('emailContent').textContent = data.content;
+                    document.getElementById('step1').classList.add('hidden');
+                    document.getElementById('step2').classList.remove('hidden');
+                    showMessage('✅ Email generated successfully!');
+                } else {
+                    showMessage(data.error || 'Failed to generate email', 'error');
+                }
+            } catch (error) {
+                showMessage('❌ Error: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function regenerateEmail() {
+            const feedback = document.getElementById('feedback').value.trim();
+            
+            if (!feedback) {
+                showMessage('Please provide feedback for regeneration', 'error');
+                return;
+            }
+
+            showLoading(true);
+
+            try {
+                const response = await fetch('/api/feedback', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        session_id: sessionId,
+                        feedback 
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    document.getElementById('emailContent').textContent = data.content;
+                    document.getElementById('feedback').value = '';
+                    
+                    // Show feedback history
+                    if (data.feedback_history && data.feedback_history.length > 0) {
+                        document.getElementById('feedbackHistoryContainer').classList.remove('hidden');
+                        document.getElementById('feedbackHistory').innerHTML = 
+                            data.feedback_history.map((f, i) => `${i + 1}. ${f}`).join('<br>');
+                    }
+                    
+                    showMessage('✅ Email regenerated with your feedback!');
+                } else {
+                    showMessage(data.error || 'Failed to regenerate email', 'error');
+                }
+            } catch (error) {
+                showMessage('❌ Error: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function finalizeEmail() {
+            showLoading(true);
+
+            try {
+                const response = await fetch('/api/finalize', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ session_id: sessionId })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    document.getElementById('finalEmailContent').textContent = data.final_content;
+                    document.getElementById('step2').classList.add('hidden');
+                    document.getElementById('step3').classList.remove('hidden');
+                    showMessage('✅ Email finalized! Ready to send.');
+                } else {
+                    showMessage(data.error || 'Failed to finalize email', 'error');
+                }
+            } catch (error) {
+                showMessage('❌ Error: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function sendEmail() {
+            const email = document.getElementById('recipientEmail').value.trim();
+            
+            if (!email) {
+                showMessage('Please enter recipient email address', 'error');
+                return;
+            }
+
+            // Basic email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showMessage('Please enter a valid email address', 'error');
+                return;
+            }
+
+            showLoading(true);
+
+            try {
+                const response = await fetch('/api/send-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        session_id: sessionId,
+                        email 
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showMessage('✅ ' + (data.message || 'Email sent successfully!'));
+                    setTimeout(() => {
+                        startOver();
+                    }, 3000);
+                } else {
+                    showMessage('❌ ' + (data.error || 'Failed to send email'), 'error');
+                }
+            } catch (error) {
+                showMessage('❌ Error: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function startOver() {
+            sessionId = null;
+            document.getElementById('topic').value = '';
+            document.getElementById('feedback').value = '';
+            document.getElementById('recipientEmail').value = '';
+            document.getElementById('emailContent').textContent = '';
+            document.getElementById('finalEmailContent').textContent = '';
+            document.getElementById('feedbackHistoryContainer').classList.add('hidden');
+            
+            document.getElementById('step1').classList.remove('hidden');
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step3').classList.add('hidden');
+            
+            showMessage('Ready to create a new email!');
+        }
+
+        // Allow Ctrl+Enter to submit in topic field
+        document.getElementById('topic').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                e.preventDefault();
+                generateEmail();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+flask
+flask-cors
+python-dotenv
+langchain
+langchain-core
+langchain-groq
+typing-extensions
+
+# Optional but recommended
+email-validator
+pytest
+pytest-flask
