@@ -12,8 +12,6 @@
 
 **AI-powered professional email generation system with interactive refinement and direct sending capabilities**
 
-[Features](#-features) • [Demo](#-demo) • [Installation](#-installation) • [Usage](#-usage) • [API](#-api-documentation) • [Tech Stack](#-tech-stack)
-
 </div>
 
 ---
