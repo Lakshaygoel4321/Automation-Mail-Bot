@@ -7,8 +7,6 @@
 ![Next.js](https://img.shields.io/badge/Next.js-14.2.33-000000?style=for-the-badge&logo=next.js)
 ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![React](https://img.shields.io/badge/React-18.3.1-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
-
 
 </div>
 
