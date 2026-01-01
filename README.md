@@ -9,11 +9,23 @@
 ![React](https://img.shields.io/badge/React-18.3.1-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
-**AI-powered professional email generation system with interactive refinement and direct sending capabilities**
+### AI-powered professional email generation system with interactive refinement and direct sending capabilities
 
-[Features](#-features) • [Demo](#-demo) • [Installation](#-installation) • [Usage](#-usage) • [API](#-api-documentation) • [Tech Stack](#-tech-stack)
+---
+
+<p align="center">
+  <a href="#-features">Features</a> •
+  <a href="#-demo">Demo</a> •
+  <a href="#-installation">Installation</a> •
+  <a href="#-usage">Usage</a> •
+  <a href="#-api-documentation">API</a> •
+  <a href="#-tech-stack">Tech Stack</a>
+</p>
 
 </div>
+
+---
+
 
 ---
 
